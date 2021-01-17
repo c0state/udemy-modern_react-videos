@@ -19,7 +19,10 @@ const VideoListItem = ({ video, onVideoSelect }: VideoListItemProps) => {
       `}
       onClick={() => onVideoSelect(video)}
     >
-      <Image alt="search item" src={video.snippet.thumbnails.medium.url} />
+      <Image
+        alt={video.snippet.title}
+        src={video.snippet.thumbnails.medium.url}
+      />
       <ListContent>
         <ItemHeader>{video.snippet.title}</ItemHeader>
       </ListContent>
