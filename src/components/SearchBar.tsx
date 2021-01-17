@@ -1,14 +1,9 @@
-import React, { FormEventHandler } from "react";
-import {
-  Divider,
-  Form,
-  FormField,
-  Input,
-  Label,
-  Segment,
-} from "semantic-ui-react";
+import React from "react";
+import { Form, FormField, Input, Label, Segment } from "semantic-ui-react";
 
-type SearchBarPropType = {};
+type SearchBarPropType = {
+  onSearch: (term: string) => void;
+};
 
 type SearchBarStateType = {
   term: string;
@@ -21,14 +16,15 @@ class SearchBar extends React.Component<SearchBarPropType, SearchBarStateType> {
     this.setState({ ...this.state, term: event.target.value });
   };
 
-  onFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  onSearch = (event: React.FormEvent) => {
     event.preventDefault();
+    this.props.onSearch(this.state.term);
   };
 
   render() {
     return (
       <Segment className="search-bar">
-        <Form onSubmit={this.onFormSubmit}>
+        <Form onSubmit={this.onSearch}>
           <FormField>
             <Label>Video Search</Label>
             <Input
