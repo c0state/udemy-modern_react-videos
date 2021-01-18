@@ -1,4 +1,4 @@
-import React, { ReactElement } from "react";
+import React from "react";
 import { Container, List } from "semantic-ui-react";
 import { VideoData, VideosData } from "./App";
 import VideoItem from "./VideoItem";
@@ -8,16 +8,26 @@ type VideoListProps = {
   onVideoSelect: (video: VideoData) => void;
 };
 
-const VideoList = ({ videos, onVideoSelect }: VideoListProps): ReactElement => {
-  return (
-    <Container>
-      <List divided>
-        {videos.map((video) => (
-          <VideoItem key={video.id.videoId} video={video} onVideoSelect={onVideoSelect} />
-        ))}
-      </List>
-    </Container>
-  );
-};
+class VideoList extends React.Component<VideoListProps> {
+  componentDidMount() {
+    this.props.onVideoSelect(this.props.videos[0]);
+  }
+
+  render() {
+    return (
+      <Container>
+        <List divided>
+          {this.props.videos.map((video) => (
+            <VideoItem
+              key={video.id.videoId}
+              video={video}
+              onVideoSelect={this.props.onVideoSelect}
+            />
+          ))}
+        </List>
+      </Container>
+    );
+  }
+}
 
 export default VideoList;
