@@ -20,6 +20,9 @@ const VideoListItem = ({ video, onVideoSelect }: VideoListItemProps) => {
       onClick={() => onVideoSelect(video)}
     >
       <Image
+        css={css`
+          max-width: 180px !important;
+        `}
         alt={video.snippet.title}
         src={video.snippet.thumbnails.medium.url}
       />

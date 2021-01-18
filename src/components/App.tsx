@@ -1,5 +1,11 @@
 import React from "react";
-import { Container } from "semantic-ui-react";
+import {
+  Container,
+  Grid,
+  GridColumn,
+  GridRow,
+  Placeholder,
+} from "semantic-ui-react";
 import "./App.css";
 import SearchBar from "./SearchBar";
 import youtube from "../api/youtube";
@@ -31,7 +37,11 @@ class App extends React.Component {
         q: term,
       },
     });
-    this.setState({ ...this.state, videos: response.data.items });
+    this.setState({
+      ...this.state,
+      videos: response.data.items,
+      selectedVideo: response.data.items[0],
+    });
   };
 
   onVideoSelect = (video: VideoData) => {
@@ -40,18 +50,26 @@ class App extends React.Component {
 
   render() {
     return (
-      <div className="App">
-        <Container>
-          <SearchBar onSearch={this.onSearch} />
-        </Container>
-        {this.state.selectedVideo && (
-          <VideoDetail video={this.state.selectedVideo} />
-        )}
-        <VideoList
-          videos={this.state.videos}
-          onVideoSelect={this.onVideoSelect}
-        />
-      </div>
+      <Container className="App">
+        <SearchBar onSearch={this.onSearch} />
+        <Grid>
+          <GridRow>
+            <GridColumn width="11">
+              {this.state.selectedVideo ? (
+                <VideoDetail video={this.state.selectedVideo} />
+              ) : (
+                <Container />
+              )}
+            </GridColumn>
+            <GridColumn width="5">
+              <VideoList
+                videos={this.state.videos}
+                onVideoSelect={this.onVideoSelect}
+              />
+            </GridColumn>
+          </GridRow>
+        </Grid>
+      </Container>
     );
   }
 }
